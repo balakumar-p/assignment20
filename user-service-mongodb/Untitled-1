@@ -1,0 +1,7 @@
+Docker Installation Guide
+
+// install on linux
+sudo apt-get install docker.io
+
+// view the list of images
+docker images
