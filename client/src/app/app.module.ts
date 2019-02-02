@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { AdduserComponent } from './adduser/adduser.component';
+import { CommonService } from './common.service';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -14,9 +17,11 @@ import { AdduserComponent } from './adduser/adduser.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

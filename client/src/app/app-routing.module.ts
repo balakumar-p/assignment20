@@ -6,6 +6,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 const routes: Routes = [
   { path: '', component: UserlistComponent },
   { path: 'adduser', component: AdduserComponent }
+  // { path: 'uploadfile', component: AdduserComponent }
 ];
 
 @NgModule({

@@ -1,16 +1,24 @@
-<div class="container"> 
-  <div>
-    <table>
-      <thead>List of users</thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>SSO ID</th>
-      </tr>
-    </table>
-  </div>
-  <div><a href="/adduser">Add New user</a></div>
-</div>
-
-
+<form #userForm="ngForm" novalidate>
+        <div class="form-group row">
+          <table>
+            <thead>
+              <tr>
+                <th>SSO ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userList">
+                <td>user.ssoid</td>
+                <td>user.first</td>
+                <td>user.last</td>
+                <td>user.email</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      
