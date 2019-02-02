@@ -8,12 +8,16 @@ import { AdduserComponent } from './adduser/adduser.component';
 import { CommonService } from './common.service';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AddeduserComponent } from './addeduser/addeduser.component';
+import { UploadfileComponent } from './uploadfile/uploadfile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserlistComponent,
-    AdduserComponent
+    AdduserComponent,
+    AddeduserComponent,
+    UploadfileComponent
   ],
   imports: [
     BrowserModule,

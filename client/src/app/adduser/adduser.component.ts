@@ -26,7 +26,8 @@ export class AdduserComponent implements OnInit {
         console.log(res.status._success);
         if(res && res.status === 200 ) {    
           this.spinner = false;
-          this.router.navigateByUrl('');    
+          console.log("success");
+          this.router.navigateByUrl('addeduser');    
         } else {
           this.spinner = false;
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class CommonService {
 
   //Get user
   getUser() {
-    return this.http.get('http://localhost:8090/users/getuser');
+  // return this.http.get('http://localhost:8090/users');
+    return this.http.get('http://localhost:8090/users')
+    .pipe(map((res:Response) => res.json()));
   }
 
   //File upload
@@ -29,7 +32,8 @@ export class CommonService {
   }
 
   //File list
-  fileList() {
-    return this.http.get('http://localhost:8090/file/uploadfile');
+  getfiles() {
+    return this.http.get('http://localhost:8090/files')
+    .pipe(map((res:Response) => res.json()));
   }
 }
