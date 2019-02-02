@@ -153,7 +153,7 @@ apis.post('/upload', (req, res) => {
     });
 });
 
-description: String;
+
 // Downloading a single file
 apis.get('/file/:filename', (req, res) => {
     gfs.collection('ctFiles'); //set collection name to lookup into
@@ -204,6 +204,31 @@ apis.get('/files', (req, res) => {
         res.json(filesData);
     });
 });
+
+
+// Downloading a single file
+apis.get('/delete/:filename', (req, res,err) => {
+    gfs.collection('ctFiles'); //set collection name to lookup into
+        if(req.params.filename) {
+            gfs.files.findOneAndDelete({filename: req.params.filename})
+              .then((docs)=>{
+                console.log(docs);
+                 if(docs.value) { 
+                    return res.json(docs).status(200);
+                 } else {
+                    res.status(404)
+                    return res.json();
+                 }
+            }).catch((err)=>{
+                console.log(err);
+				return res.status(500);
+            })
+          } else {
+            return res.status(400);
+          } 
+    });
+
+ 
 
 // Allows cross-origin domains to access this API
 server.use((req, res, next) => {
