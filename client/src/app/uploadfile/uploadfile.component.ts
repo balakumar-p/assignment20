@@ -16,7 +16,7 @@ export class UploadfileComponent implements OnInit {
   spinner: boolean = false;
   fileName: any;
   descriptionDetails: any;
-  private uploader: FileUploader;
+  private uploader: FileUploader; 
   constructor(private service: CommonService, private router: Router) { }
 
   ngOnInit() {
