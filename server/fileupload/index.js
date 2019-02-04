@@ -121,8 +121,9 @@ apis.post('/users/add', (req, res) => {
 // Setting up the storage element
 let storage = GridFsStorage({
     gfs: gfs,
-
+    
     filename: (req, file, cb) => {
+    
         let date = Date.now();
         // The way you want to store your file in database
         cb(null, file.fieldname + '-' + date + '.');
@@ -130,6 +131,9 @@ let storage = GridFsStorage({
 
     // Additional Meta-data that you want to store
     metadata: function (req, file, cb) {
+        console.log("meta ==>", file.originalname);
+		
+	
         //console.log( JSON.stringify(req))
         cb(null, { originalname: file.originalname, description: req.body.description });
 
@@ -139,18 +143,40 @@ let storage = GridFsStorage({
 
 // Multer configuration for single file uploads
 let upload = multer({
-    storage: storage
-}).single('file', 'description-bala');
+
+    onFileUploadStart: function (file) {
+        console.log(file.fieldname + ' is starting ...')
+    },
+    onFileUploadData: function (file, data) {
+        console.log(data.length + ' of ' + file.fieldname + ' arrived')
+    },
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path)
+    },
+    storage: storage,
+}).single('file');
 
 // Route for file upload
 apis.post('/upload', (req, res) => {
+   //console.log(req);
     upload(req, res, (err) => {
+        console.log("");
+		//console.log("gobi ==>", req.body);
         if (err) {
             res.json({ error_code: 1, err_desc: err });
             return;
         }
-        res.json({ error_code: 0, error_desc: null, file_uploaded: true });
+
+        if (req.body.description) {
+            res.json({ error_code: 0, error_desc: null, file_uploaded: true });
+            console.log(req.body.description);
+        }
+        else {
+            res.status(400);
+            res.json({ error_code: 1, error_desc: null, file_uploaded: false });
+        }
     });
+
 });
 
 
@@ -187,7 +213,7 @@ apis.get('/files', (req, res) => {
     gfs.files.find({}).toArray((err, files) => {
         // Error checking
         if (!files || files.length === 0) {
-            return res.status(404).json({
+            return res.status(204).json({
                 responseCode: 1,
                 responseMessage: "error"
             });
@@ -207,37 +233,39 @@ apis.get('/files', (req, res) => {
 
 
 // Downloading a single file
-apis.get('/delete/:filename', (req, res,err) => {
+apis.get('/delete/:filename', (req, res, err) => {
     gfs.collection('ctFiles'); //set collection name to lookup into
-        if(req.params.filename) {
-            gfs.files.findOneAndDelete({filename: req.params.filename})
-              .then((docs)=>{
+    if (req.params.filename) {
+        gfs.files.findOneAndDelete({ filename: req.params.filename })
+            .then((docs) => {
                 console.log(docs);
-                 if(docs.value) { 
+                if (docs.value) {
                     return res.json(docs).status(200);
-                 } else {
+                } else {
                     res.status(404)
                     return res.json();
-                 }
-            }).catch((err)=>{
+                }
+            }).catch((err) => {
                 console.log(err);
-				return res.status(500);
+                return res.status(500);
             })
-          } else {
-            return res.status(400);
-          } 
-    });
+    } else {
+        return res.status(400);
+    }
+});
 
- 
+
 
 // Allows cross-origin domains to access this API
 server.use((req, res, next) => {
     res.append('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.append("Access-Control-Allow-Headers", "Origin, Accept,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.append("Access-Control-Allow-Headers", "Origin, Accept,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Access-Control-Request-Method, Access-Control-Request-Headers");
     res.append('Access-Control-Allow-Credentials', true);
     next();
 });
+
+
 
 // routes
 server.use('/', apis);
