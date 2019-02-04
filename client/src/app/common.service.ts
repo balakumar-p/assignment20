@@ -21,14 +21,14 @@ export class CommonService {
     .pipe(map((res:Response) => res.json()));
   }
 
-  //File upload
-  fileUpload(file) {
-    console.log("services ==>",file);
-    alert("service");
-    alert("file=>"+file.file);
-    alert("description=>"+file.description);
-    return this.http.post('http://localhost:8090/upload', file);
-  }
+  // //File upload
+  // fileUpload(file) {
+  //   console.log("services ==>",file);
+  //   alert("service");
+  //   alert("file=>"+file.file);
+  //   alert("description=>"+file.description);
+  //   return this.http.post('http://localhost:8090/upload', file);
+  // }
 
    //File delete
    fileDelete(file) {

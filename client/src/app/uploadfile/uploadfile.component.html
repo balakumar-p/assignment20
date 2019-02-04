@@ -29,36 +29,38 @@
       </table>
     </div>
 </div>
-<div>
-    <form #fileForm="ngForm" novalidate>
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label">File: </label>
-            <div class="col-sm-9">
-             <input type="file" class="form-control" required [(ngModel)]="file" name="file" #fileName="ngModel" required>
-
+<form #fileForm="ngForm" novalidate>
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <br>
+          <form>
+              <div class="form-group">
+                  <label for="multiple">Choose file(s)</label>
+                  <!-- <input type="file" class="form-control" name="file" ng2FileSelect [uploader]="uploader" multiple  />
+              </div>    -->
+              <input type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Description: </label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" required [(ngModel)]="description" name="description" #descriptionDetail="ngModel" required>
-              <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
-                <div *ngIf="description.errors?.required" class="alert alert-danger">Description is Mandatory</div>
-              </div> -->
-            </div>
-        </div>
-    
-        <div class="form-group row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-9">
-              <input type="button" class="btn btn-primary" name="addFile" (click)="fileUploadMethod(fileForm.value)" id="file-upload" value="Upload" /> &nbsp;&nbsp;
-              <input type="reset" class="btn btn-secondary" name="resetFile" value="Reset" (click)="fileDetails.resetForm({})" />
-            </div>
-        </div>
-        <div class="form-group row" *ngIf="errorMessage">
-            <div class="col-sm-12">
-              <div class="alert alert-danger">{{errorMessage}}</div>
-            </div>
+              
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Description: </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" required [(ngModel)]="description" name="description" #descriptionDetail="ngModel" required>
+                </div>
+            </div>          
+          </form>
+      </div>
+      </div>
+      <br>
+      <div class="col-md-8">
+          <div>
+              <hr>
+              <button type="button" class="btn btn-success btn-s"
+                      (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                  <span class="fa fa-upload"></span> Upload
+              </button>
           </div>
-    </form>
-    </div>
+      </div>
+</div>
+</form>
+<hr>

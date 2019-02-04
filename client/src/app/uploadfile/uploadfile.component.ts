@@ -8,79 +8,49 @@ import { FileUploader } from 'ng2-file-upload';
   templateUrl: './uploadfile.component.html',
   styleUrls: ['./uploadfile.component.css']
 })
+
 export class UploadfileComponent implements OnInit {
   files: FileModel[];
-  fileInfo: FileModel;
+  fileForm: FileModel;
   valButton = "Submit";
   errorMessage: any;
   spinner: boolean = false;
   fileName: any;
-  descriptionDetails: any;
-  private uploader: FileUploader; 
+  description: any;
+  private uploader: FileUploader;
   constructor(private service: CommonService, private router: Router) { }
+  private url = 'http://localhost:8090/upload';
 
   ngOnInit() {
-    // console.log('fileInfo: ', this.fileInfo);
-    // console.log('files: ', this.files);
     this.getFileList();
+    this.uploader = new FileUploader({ url: this.url });
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('description', this.description);
+    };
+    this.uploader.onCompleteAll = () => {
+      this.getFileList();
+
+    };
   }
 
-  // downloadFile(file:FileModel) {
-  //   this.spinner = true;
-  //   this.service.fileDownload(file).subscribe(
-  //     (data: any) => {
-  //       console.log(data);
-  //       console.log("data");
-  //       console.log(data);
-  //       this.router.getCurrentNavigation ;    
-       
-  //     }, (error) => {
-  //       this.spinner = false;
-  //       this.errorMessage = 'We are having some technical error, please try after sometime to get the existing user informations...!!!';
-  //     }
-  //   )
-  // }
 
-  deleteFile(file:FileModel) {
+  deleteFile(file: FileModel) {
     this.spinner = true;
     this.service.fileDelete(file).subscribe(
       (data: any) => {
-        console.log(data);
-        console.log("data");
-        console.log(data);
-      this.getFileList();
-        
-       
+        this.getFileList();
       }, (error) => {
         this.spinner = false;
         this.errorMessage = 'We are having some technical error, please try after sometime to get the existing user informations...!!!';
       }
     )
   }
-
 
   getFileList() {
     this.spinner = true;
     this.service.getfiles().subscribe(
       (data: any) => {
-        this.files = data; 
-        this.spinner = false;
-      }, (error) => {
-        this.spinner = false;
-        this.errorMessage = 'We are having some technical error, please try after sometime to get the existing user informations...!!!';
-      }
-    )
-  }
-
-  fileUploadMethod(file) {
-    console.log('file: ', file);
-    this.service.fileUpload(file).subscribe(
-      (data: any) => {
-        this.getFileList();
-        console.log("dataa==>",data);
-      
-        console.log("file=== >",file);
-       // this.fileInfo = data; 
+        this.files = data;
         this.spinner = false;
       }, (error) => {
         this.spinner = false;
