@@ -30,10 +30,8 @@ export class AdduserComponent implements OnInit {
           this.router.navigateByUrl('addeduser');    
         } else {
           this.spinner = false;
-
           this.errorMessage = 'Failed: ' + res.message;
-        }
-        
+        }   
         console.log("==>"+res);
       }, (error) => {
         this.spinner = false;

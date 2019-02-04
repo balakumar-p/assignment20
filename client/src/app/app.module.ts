@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AddeduserComponent } from './addeduser/addeduser.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
-
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 @NgModule({
   declarations: [
     AppComponent,

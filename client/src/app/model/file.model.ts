@@ -3,4 +3,5 @@ export class FileModel {
     contentType: string;
     originalname: string;
     description: string;
+    file:any;
 }

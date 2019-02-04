@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: UserlistComponent },
   { path: 'adduser', component: AdduserComponent },
   { path: 'addeduser', component: AddeduserComponent },
-   { path: 'uploadfile', component: UploadfileComponent }
+  { path: 'uploadfile', component: UploadfileComponent }
 ];
 
 @NgModule({
