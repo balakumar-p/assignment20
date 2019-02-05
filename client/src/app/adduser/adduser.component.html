@@ -1,52 +1,69 @@
-<header>User Register Form</header>
+<div class="container">
+  <div class="row margin-top-10">
+      <div class="col-xl-8 col-lg-10 col-md-12 offset-xl-2 offset-lg-1 mt-4" *ngIf="!userAdded">
+        <legend>User Registeration Form</legend>
+        <form #userForm="ngForm" novalidate>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">First Name: </label>
+                <div class="col-sm-9">
+                <input type="text" class="form-control" required [(ngModel)]="userDetails.firstname" name="firstname" #firstname="ngModel">
+                <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                    <div *ngIf="firstname.errors?.required" class="alert alert-danger">First Name is required field</div>
+                </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Last Name: </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" required [(ngModel)]="userDetails.lastname" name="lastname" #lastname="ngModel">
+                  <div *ngIf="userForm.invalid && (lastname.dirty || lastname.touched)">
+                    <div *ngIf="lastname.errors?.required" class="alert alert-danger">Last Name is required field</div>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">SSO ID: </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" required [(ngModel)]="userDetails.ssoid" name="ssoid" #ssoid="ngModel">
+                  <div *ngIf="userForm.invalid && (ssoid.dirty || ssoid.touched)">
+                    <div *ngIf="ssoid.errors?.required" class="alert alert-danger">SSO ID is required field</div>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Email: </label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" required [(ngModel)]="userDetails.email" name="email" #email="ngModel">
+                  <div *ngIf="userForm.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.required" class="alert alert-danger">SSO ID is required field</div>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9">
+                  <input type="button" class="btn btn-primary" name="addUser" (click)="addUser(userForm.value, userForm)" [disabled]="userForm.invalid" id="add-user" value="{{valButton}}" /> &nbsp;&nbsp;
+                  <input type="reset" class="btn btn-secondary" name="resetUser" value="Cancel" (click)="userForm.resetForm({})" />
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="errorMessage">
+                <div class="col-sm-12">
+                  <div class="alert alert-danger">{{errorMessage}}</div>
+                </div>
+              </div>
+        </form>
+    </div>
 
-<form #userForm="ngForm" novalidate>
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">First Name: </label>
-        <div class="col-sm-9">
-        <input type="text" class="form-control" required [(ngModel)]="userDetails.firstname" name="firstname" #firstname="ngModel">
-        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
-            <div *ngIf="firstname.errors?.required" class="alert alert-danger">First Name is required field</div>
+    <div class="col-xl-8 col-lg-10 col-md-12 offset-xl-2 offset-lg-1 mt-4" *ngIf="userAdded">
+      <legend>User {{userDetails.firstname}} {{userDetails.lastname}} registered successfully</legend>
+      <div class="row mt-5">
+        <div class="col-md-6">
+            <a href="uploadfile">Click here to upload/manage files</a>
         </div>
+        <div class="col-md-6 text-right">
+            Go to <a href="\">User List</a>
         </div>
+      </div>      
     </div>
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Last Name: </label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" required [(ngModel)]="userDetails.lastname" name="lastname" #lastname="ngModel">
-          <div *ngIf="userForm.invalid && (lastname.dirty || lastname.touched)">
-            <div *ngIf="lastname.errors?.required" class="alert alert-danger">Last Name is required field</div>
-          </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">SSO ID: </label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" required [(ngModel)]="userDetails.ssoid" name="ssoid" #ssoid="ngModel">
-          <div *ngIf="userForm.invalid && (ssoid.dirty || ssoid.touched)">
-            <div *ngIf="ssoid.errors?.required" class="alert alert-danger">SSO ID is required field</div>
-          </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Email: </label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" required [(ngModel)]="userDetails.email" name="email" #email="ngModel">
-          <div *ngIf="userForm.invalid && (email.dirty || email.touched)">
-            <div *ngIf="email.errors?.required" class="alert alert-danger">SSO ID is required field</div>
-          </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-9">
-          <input type="button" class="btn btn-primary" name="addUser" (click)="addUser(userForm.value, userForm)" [disabled]="userForm.invalid" id="add-user" value="{{valButton}}" /> &nbsp;&nbsp;
-          <input type="reset" class="btn btn-secondary" name="resetUser" value="Reset" (click)="userForm.resetForm({})" />
-        </div>
-    </div>
-    <div class="form-group row" *ngIf="errorMessage">
-        <div class="col-sm-12">
-          <div class="alert alert-danger">{{errorMessage}}</div>
-        </div>
-      </div>
-</form>
+  </div>
+</div>

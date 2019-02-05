@@ -29,7 +29,7 @@ export class UploadfileComponent implements OnInit {
     };
     this.uploader.onCompleteAll = () => {
       this.getFileList();
-
+      this.description = '';
     };
   }
 

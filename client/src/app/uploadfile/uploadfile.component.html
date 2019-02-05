@@ -1,66 +1,68 @@
-<p>
-  List Of Documents
-</p>
-<div class="form-group">
-    <div class="form-group row">
-      <table>
-        <thead>
-          <tr>
-            <th>SSO ID</th>
-            <th>File Name</th>
-            <th>Type</th>
-            <th>Description</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let file of files">
-            <td>{{index}}</td>
-            <td>{{file.originalname}}</td>
-            <td>{{file.contentType}}</td>
-            <td>{{file.description}}</td>
-            <td>
-              <a href="http://localhost:8090/file/{{file.filename}}" target="_blank" class="btn btn-primary">
-                download
-              </a></td>
-            <td><button (click)="deleteFile(file)" class="btn btn-primary">delete</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-</div>
-<form #fileForm="ngForm" novalidate>
 <div class="container">
-  <div class="row">
-      <div class="col-md-4">
-        <br>
-          <form>
-              <div class="form-group">
-                  <label for="multiple">Choose file(s)</label>
-                  <!-- <input type="file" class="form-control" name="file" ng2FileSelect [uploader]="uploader" multiple  />
-              </div>    -->
-              <input type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
-            </div>
-              
+  <div class="row margin-top-10">
+      <div class="col-xl-12 col-lg-12 col-md-12 mt-4">
+        <legend>List of Documents</legend>
+        <div class="table-responsive">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>File Name</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th colspan="2"></th>
+      
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let file of files; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{file.originalname}}</td>
+                  <td>{{file.contentType}}</td>
+                  <td>{{file.description}}</td>
+                  <td>
+                    <a href="http://localhost:8090/file/{{file.filename}}" target="_blank" class="btn btn-success btn-s">
+                      download
+                    </a></td>
+                  <td><button (click)="deleteFile(file)" class="btn btn-danger">delete</button></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+  </div>
+
+  <div class="row margin-top-10">
+      <div class="col-xl-12 col-lg-12 col-md-12 mt-4">
+          <legend>Upload New Document</legend>
+          <form #fileForm="ngForm" novalidate>
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Description: </label>
+                <label class="col-sm-3 col-form-label">Choose file(s)</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" required [(ngModel)]="description" name="description" #descriptionDetail="ngModel" required>
+                  <input type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader"  />
+                </div>                
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Description: </label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" required [(ngModel)]="description" name="description" #descriptionDetail="ngModel" required>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-9 offset-sm-0 offset-md-3 offset-lg-3">
+                    <button type="button" class="btn btn-success btn-s"
+                      (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                        <span class="fa fa-upload"></span> Upload
+                    </button>
                 </div>
-            </div>          
+              </div> 
           </form>
       </div>
+  </div>
+
+  <div class="row margin-top-10">
+      <div class="col-md-12 text-left mb-4">
+          Go to <a href="\">User List</a>
       </div>
-      <br>
-      <div class="col-md-8">
-          <div>
-              <hr>
-              <button type="button" class="btn btn-success btn-s"
-                      (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                  <span class="fa fa-upload"></span> Upload
-              </button>
-          </div>
-      </div>
+  </div>
 </div>
-</form>
-<hr>

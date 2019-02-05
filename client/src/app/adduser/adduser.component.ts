@@ -13,6 +13,7 @@ export class AdduserComponent implements OnInit {
   valButton = "Add User";
   errorMessage: any;
   spinner: boolean = false;
+  userAdded: boolean = false;
   
   constructor(private service: CommonService, private router: Router) { }
 
@@ -26,8 +27,9 @@ export class AdduserComponent implements OnInit {
         console.log(res.status._success);
         if(res && res.status === 200 ) {    
           this.spinner = false;
+          this.userAdded = true;
           console.log("success");
-          this.router.navigateByUrl('addeduser');    
+          // this.router.navigateByUrl('addeduser');    
         } else {
           this.spinner = false;
           this.errorMessage = 'Failed: ' + res.message;
